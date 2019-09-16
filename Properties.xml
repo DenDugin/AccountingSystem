@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Properties>
+	
+	<Name>
+		<Title>Name</Title>	
+    </Name>
+
+
+    <Weight>
+		<Title>Weight</Title>	
+		<value>Light</value>
+		<value>Middle</value>
+		<value>Heavy</value>
+    </Weight>
+
+
+    <Height>
+		<Title>Height</Title>	
+		<value>Little</value>
+		<value>Low</value>
+		<value>Tall</value>
+    </Height>
+
+
+    <Type>
+		<Title>Type</Title>	
+		<value>Type1</value>
+		<value>Type2</value>
+		<value>Type3</value>
+    </Type>
+	
+
+
+</Properties>
