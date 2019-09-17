@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Animals>
-
     <Properties>	
 		<Name>Mouse</Name>
 		<Weight>Light</Weight>
@@ -18,10 +17,8 @@
     <Properties>
 		<Name>Croc</Name>
 		<Weight>Light</Weight>
-		<Height>Tall</Height>
-		<Type>Type2</Type>
+		<Height>Little</Height>
+		<Type>Type3</Type>
     </Properties>
-	
-	
-	
+
 </Animals>

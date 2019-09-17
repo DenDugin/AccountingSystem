@@ -1,27 +1,19 @@
 package main;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import SQLLib.Field;
-import SQLLib.TableFields;
-import SQLLib.TableOperation;
-import java.io.File;
+import Table.Field;
+import Table.TableFields;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import static SQLLib.TableOperation.*;
+import static Table.TableOperation.*;
 
 /* 
  * класс организует наполнение данными коллекции Animals.
@@ -30,7 +22,6 @@ import static SQLLib.TableOperation.*;
 
 public class CreateCollection {
     
-        // 2 do catch
     
 	public static List<Animals> FillList() {
             
@@ -66,59 +57,30 @@ public class CreateCollection {
             Node root = document.getDocumentElement();
             
             
-            // Просматриваем все подэлементы корневого - т.е. книги
+            // Просматриваем все подэлементы корневого
             NodeList books = root.getChildNodes();
             for (int i = 0; i < books.getLength(); i++) {
                 Node book = books.item(i);
+
                 // Если нода не текст, то это книга - заходим внутрь
                 if (book.getNodeType() != Node.TEXT_NODE) {
                     NodeList bookProps = book.getChildNodes();
-                    for(int j = 0; j < bookProps.getLength(); j++) {
-                        Node bookProp = bookProps.item(j);
-                        // Если нода не текст, то это один из параметров книги - печатаем
-                        if (bookProp.getNodeType() != Node.TEXT_NODE) {
-                            
-                            if (  bookProp.getNodeName().equals("Title") )                                 
-                            { //System.out.println("This properites : " + bookProp.getChildNodes().item(0).getTextContent()); 
-                              fields.add(new Field<String>( bookProp.getChildNodes().item(0).getTextContent(), String.class));
-                            }
-                            
-                            //System.out.println(bookProp.getNodeName() + ":" + bookProp.getChildNodes().item(0).getTextContent());
-                        }
-                    }
-                    //System.out.println("===========>>>>");
+                    
+                  if ( bookProps.item(0) == null ) throw new ParserConfigurationException("В Properties.xml найден пустой тэг"); 
+
+                    fields.add(new Field<String>( bookProps.item(0).getTextContent(), String.class));
+
                 }
             }
         
  
-        } catch (ParserConfigurationException ex) {
+        } catch (ParserConfigurationException | SAXException | IllegalArgumentException | IOException ex) {
                
                 ex.printStackTrace(System.out);            
                 AddToFile(ex.getMessage());
                 AddToFile(Arrays.toString(ex.getStackTrace()));
                 CloseFile();
- 
-        } catch (SAXException ex) {
-            
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();
-                
-            } catch (IllegalArgumentException ex) {
-            
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();        
-                
-                
-        } catch (IOException ex) {
-            
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();
+                System.exit(1);
         }
        
       
@@ -127,7 +89,7 @@ public class CreateCollection {
         }
       
          // парсим input.xml и заполняем коллекцию Animals
-         private static void ParseInput(TableFields providerFields, List<Animals> m)
+         private static void ParseInput(TableFields AnimalsFields, List<Animals> m)
         {
 
          List<String> Properts;
@@ -141,62 +103,47 @@ public class CreateCollection {
  
             // Получаем корневой элемент
             Node root = document.getDocumentElement();
-            
-        
-            
-            // Просматриваем все подэлементы корневого - т.е. книги
+
+            // Просматриваем все подэлементы корневого 
             NodeList books = root.getChildNodes();
             for (int i = 0; i < books.getLength(); i++) {
                 Node book = books.item(i);
                 // Если нода не текст, то это книга - заходим внутрь
                 if (book.getNodeType() != Node.TEXT_NODE) {
+                    int k = 0;
                     Properts  = new ArrayList<String>();
                     NodeList bookProps = book.getChildNodes();
                     for(int j = 0; j < bookProps.getLength(); j++) {
                         Node bookProp = bookProps.item(j);
-                        // Если нода не текст, то это один из параметров книги - печатаем
+                        // Если нода не текст, то это один из параметров книги
                         if (bookProp.getNodeType() != Node.TEXT_NODE) {
                             
                             if ( bookProp.getChildNodes().item(0) != null )
                             {
-                            Properts.add(bookProp.getChildNodes().item(0).getTextContent());                            
+                                 // проверка соответствия полей  c properties.xml
+                               if ( bookProp.getNodeName().equals(AnimalsFields.getFieldName(k)) == false )
+                                   throw new ParserConfigurationException("Не соответствие названия полей в input.xml и properties.xml");
+                  
+                            Properts.add(bookProp.getChildNodes().item(0).getTextContent());                                
                             //System.out.println("This input : " + bookProp.getChildNodes().item(0).getTextContent()); 
+                            k++;
                             }
                             else  Properts.add("NULL"); 
-                            
-                            //System.out.println(bookProp.getNodeName() + ":" + bookProp.getChildNodes().item(0).getTextContent());
+
                         }
                     }
-                    //System.out.println("Properts = " + Properts);
-                    m.add( new Animals(providerFields, Properts.toArray()));
-                    //System.out.println("===========>>>>");
+
+                    m.add( new Animals(AnimalsFields, Properts.toArray()));
+
                 }
             }
 
-        } catch (ParserConfigurationException ex) {                
+        } catch (ParserConfigurationException | SAXException | IllegalArgumentException | IOException ex) {                
                 ex.printStackTrace(System.out);
                 AddToFile(ex.getMessage());
                 AddToFile(Arrays.toString(ex.getStackTrace()));
                 CloseFile();
-                
-        } catch (SAXException ex) {
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();     
-         
-           } catch (IllegalArgumentException ex) {
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();         
-                
-                
-        } catch (IOException ex) {
-                ex.printStackTrace(System.out);                
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();
+                System.exit(1);
         }
 
         }
@@ -207,12 +154,11 @@ public class CreateCollection {
     public static List<String> GetRules()                 
     {
            
-      List Rules = null; 
+      List<String> Rules = null; 
         
       try {
-          
-            Rules  = new ArrayList<String>();  
-          
+            Rules = new ArrayList<String>();
+            
             // Создается построитель документа
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             // Создается дерево DOM документа из файла
@@ -220,10 +166,8 @@ public class CreateCollection {
  
             // Получаем корневой элемент
             Node root = document.getDocumentElement();
-            
-        
-            
-            // Просматриваем все подэлементы корневого - т.е. книги
+
+            // Просматриваем все подэлементы корневого
             NodeList books = root.getChildNodes();
             for (int i = 0; i < books.getLength(); i++) {
                 Node book = books.item(i);
@@ -233,56 +177,26 @@ public class CreateCollection {
                     NodeList bookProps = book.getChildNodes();
                     for(int j = 0; j < bookProps.getLength(); j++) {
                         Node bookProp = bookProps.item(j);
-                      
-                       
-                        if (bookProp.getNodeType() == Node.CDATA_SECTION_NODE) {
-                            
-                        if (bookProp.getTextContent().length() != 0)
-                        {
-                            
-                           // System.out.println("Rules : " + bookProp.getTextContent());                          
-                            Rules.add(bookProp.getTextContent());  
-                        }   
-                            
-                        }
-                        // Если нода не текст, то это один из параметров книги - печатаем
-
+        
+                        if (bookProp.getNodeType() == Node.CDATA_SECTION_NODE) {                            
+                            if (bookProp.getTextContent().length() != 0)                       
+                                    Rules.add(bookProp.getTextContent());                              
+                        }     
                     }
-                    //System.out.println("===========>>>>");
                 }
             }
 
-        } catch (ParserConfigurationException ex) {
+        } catch (ParserConfigurationException | SAXException | IllegalArgumentException | IOException ex) {
                 ex.printStackTrace(System.out);                
                 AddToFile(ex.getMessage());
                 AddToFile(Arrays.toString(ex.getStackTrace()));
                 CloseFile();
- 
-        } catch (SAXException ex) {
-                ex.printStackTrace(System.out);                
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();
-        
-        } catch (IllegalArgumentException ex) {
-                ex.printStackTrace(System.out);
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();            
-                
-                
-        } catch (IOException ex) {
-                 ex.printStackTrace(System.out);                
-                AddToFile(ex.getMessage());
-                AddToFile(Arrays.toString(ex.getStackTrace()));
-                CloseFile();
+                System.exit(1);
         }
       
         return Rules;
       
         }        
              
-
-          
 
 }

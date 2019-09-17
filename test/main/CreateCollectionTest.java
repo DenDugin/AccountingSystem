@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package accountingsystem.main;
+package main;
 
-import SQLLib.Field;
-import SQLLib.TableFields;
+import Table.Field;
+import Table.TableFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import main.Animals;
-import main.CreateCollection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,9 +44,9 @@ public class CreateCollectionTest {
     @Test
     public void testGetRules() {
  
-        List<String> expResult = Arrays.asList( new String[]{"    Field(\"Type\") != \"Type1\"     ",
+        List<String> expResult = Arrays.asList( new String[]{"    Field(\"Type\") == \"Type1\"     ",
         "  (Field(\"Type\") == \"Type1\" || Field(\"Type\") == \"Type2\") && Field(\"Height\") == \"Little\"    "
-        ,"    Field(\"Name\") != \"Mouse\"  &&  Field(\"Weight\") == \"Light\"  "});
+        ,"    Field(\"Type\") == \"Type3\"  &&  Field(\"Weight\") != \"Tall\"  "});
 
         List<String> result = CreateCollection.GetRules();
 

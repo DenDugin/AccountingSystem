@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package accountingsystem.SQLLib;
+package Table;
 
-import SQLLib.Field;
-import SQLLib.Record;
-import SQLLib.TableFields;
-import SQLLib.TableOperation;
-import static SQLLib.TableOperation.CreateTable;
+
+import static Table.TableOperation.CreateTable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -165,14 +157,7 @@ public class TableOperationTest {
    
     }
 
-    /**
-     * Test of Where method, of class TableOperation.
-     */
-
-
-    /**
-     * Test of WhereCount method, of class TableOperation.
-     */
+    
     @Test
     public void testWhereCount() {
       
@@ -198,7 +183,7 @@ public class TableOperationTest {
          
         TableOperation result = CreateTable().SelectFrom(ListAnimals);
        
-        result.CreateFileRez();
+        result.CreateFileRes();
         
         //Stream<? extends Record> CountStream = result.cursorStream; 
        
@@ -217,7 +202,7 @@ public class TableOperationTest {
     /**
      * Test of addTextException method, of class TableOperation.
      */
-    @Test(expected = SQLLib.TableOperation.StreamSQLException.class)
+    @Test(expected = Table.TableOperation.StreamException.class)
     public void testAddTextException() {
 
         TableOperation O =  CreateTable();
@@ -227,7 +212,7 @@ public class TableOperationTest {
         
         O.addTextException();
         
-        O.Where("ss");
+        O.Where("Test#$");
         
 
     }

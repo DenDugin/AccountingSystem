@@ -1,7 +1,5 @@
-package SQLLib;
+package Table;
 
-import java.util.List;
-import java.util.function.Function;
 
 public class  Field<T> {
 	String fieldName;  // имя поля
