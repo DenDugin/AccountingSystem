@@ -24,8 +24,6 @@
 
 
 
-Необходимые библиотеки : Upload File
-
 
 Ссылка на проект на GitHub :  https://github.com/DenDugin/AccountingSystem
 
