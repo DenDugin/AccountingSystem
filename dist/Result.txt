@@ -1,0 +1,27 @@
+Query ¹ 1 =     Field("Type") == "Type1"     
+Result count = 1
+______________________________
+Name | Weight | Height | Type | 
+--------------------------------
+Mouse | Light | Little | Type1 | 
+--------------------------------
+
+
+Query ¹ 2 =   (Field("Type") == "Type1" || Field("Type") == "Type2") && Field("Height") == "Little"    
+Result count = 1
+______________________________
+Name | Weight | Height | Type | 
+--------------------------------
+Mouse | Light | Little | Type1 | 
+--------------------------------
+
+
+Query ¹ 3 =     Field("Type") == "Type3"  &&  Field("Weight") != "Tall"  
+Result count = 1
+______________________________
+Name | Weight | Height | Type | 
+--------------------------------
+Croc | Light | Little | Type3 | 
+--------------------------------
+
+

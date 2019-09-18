@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Animals>
+    <Properties>	
+		<Name>Mouse</Name>
+		<Weight>Light</Weight>
+		<Height>Little</Height>
+		<Type>Type1</Type>				
+    </Properties>
+	
+    <Properties>
+		<Name>Elephant</Name>
+		<Weight>Heavy</Weight>
+		<Height>Tall</Height>
+		<Type>Type2</Type>		
+    </Properties>
+	
+    <Properties>
+		<Name>Croc</Name>
+		<Weight>Light</Weight>
+		<Height>Little</Height>
+		<Type>Type3</Type>
+    </Properties>
+
+</Animals>

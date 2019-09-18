@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rules>
+
+	<Rule><![CDATA[    Field("Type") == "Type1"     ]]></Rule>
+
+
+	<Rule><![CDATA[  (Field("Type") == "Type1" || Field("Type") == "Type2") && Field("Height") == "Little"    ]]></Rule>
+
+
+	<Rule><![CDATA[    Field("Type") == "Type3"  &&  Field("Weight") != "Tall"  ]]></Rule>
+
+
+</Rules>
