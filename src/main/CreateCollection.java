@@ -33,14 +33,12 @@ public class CreateCollection {
 
              
                 ParseInput(AnimalsFields, ListAnimals); // добавдяем записи в таблицу
-                
-          
-                //System.out.println("ListAnimals size " + ListAnimals.size());   
+  
                 
                 return ListAnimals;    
 	}
         
-        // парсинг названия полей(свойств животных) и получаем List полей шапки 
+        // парсим названия полей(свойств животных) и получаем List полей шапки 
         private static List<Field> ParseProperties() 
         {
          List<Field> fields = null;   

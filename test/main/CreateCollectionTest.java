@@ -51,9 +51,7 @@ public class CreateCollectionTest {
         List<String> result = CreateCollection.GetRules();
 
         assertEquals(expResult, result);
-        
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+
     }
     
     
@@ -61,8 +59,7 @@ public class CreateCollectionTest {
     @Test
     public void testFillList() {
  
-         List<Animals> ListAnimals = new ArrayList<>(); 
-        
+         List<Animals> ListAnimals = new ArrayList<>();         
          List<Field> fields = new ArrayList<>();   
          
          fields.add(new Field<String>( "Name", String.class));

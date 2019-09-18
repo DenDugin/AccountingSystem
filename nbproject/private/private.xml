@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/SQLLib/Record.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/SQLLib/TableOperation.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/test/accountingsystem/SQLLib/TableOperationTest.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/main/AccountSystem.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/test/accountingsystem/main/CreateCollectionTest.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/SQLLib/TableFields.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/main/CreateCollection.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/SQLLib/Field.java</file>
-            <file>file:/D:/Development/Java/AccountingSystem/src/accountingsystem/main/Animals.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/main/CreateCollection.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/Table/Field.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/Table/Record.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/Table/TableOperation.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/main/Animals.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/main/AccountSystem.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/src/Table/TableFields.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/test/Table/TableOperationTest.java</file>
+            <file>file:/D:/Development/Java/AccountingSystem/test/main/CreateCollectionTest.java</file>
         </group>
     </open-files>
 </project-private>

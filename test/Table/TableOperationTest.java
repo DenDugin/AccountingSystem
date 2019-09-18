@@ -20,6 +20,8 @@ import static org.junit.Assert.*;
  * @author Den
  */
 public class TableOperationTest {
+
+    private  List<Animals> ListAnimals;   
     
     public TableOperationTest() {
     }
@@ -34,10 +36,31 @@ public class TableOperationTest {
     
     @Before
     public void setUp() {
+        
+        
+         ListAnimals = new ArrayList<>();         
+         List<Field> fields = new ArrayList<>();   
+         
+         fields.add(new Field<String>( "Name", String.class));
+         fields.add(new Field<String>( "Weight", String.class));
+         fields.add(new Field<String>( "Height", String.class));
+         fields.add(new Field<String>( "Type", String.class));
+        
+         
+        TableFields AnimalsFields = new TableFields(fields);
+         
+        List<String> p = Arrays.asList( new String[]{"Mouse",
+                                                     "Light",
+                                                     "Little",
+                                                     "Type1"});
+         
+        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
+
     }
     
     @After
     public void tearDown() {
+        ListAnimals.clear();
     }
 
 
@@ -47,74 +70,33 @@ public class TableOperationTest {
         TableOperation result = TableOperation.CreateTable();
         
         assertNotNull(result);
-        // TODO review the generated test code and remove the default call to fail.
-        
+
     }
     
     
     
     @Test
     public void testSelectFrom() {
-  
-        
-         List<Animals> ListAnimals = new ArrayList<>();         
-         List<Field> fields = new ArrayList<>();   
-         
-         fields.add(new Field<String>( "Name", String.class));
-         fields.add(new Field<String>( "Weight", String.class));
-         fields.add(new Field<String>( "Height", String.class));
-         fields.add(new Field<String>( "Type", String.class));
-        
-         
-        TableFields AnimalsFields = new TableFields(fields);
-         
-        List<String> p = Arrays.asList( new String[]{"Mouse",
-                                                     "Light",
-                                                     "Little",
-                                                     "Type1"});
-         
-        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
-       
 
-        TableOperation result = CreateTable().SelectFrom(ListAnimals);
+        List<Animals> LA = new ArrayList<>(ListAnimals); 
+    
+        TableOperation result = CreateTable().SelectFrom(LA);
         
         assertNotNull(result);
-        
-        //assertEquals(CreateTable().SelectFrom(ListAnimals), result);
 
     }
     
     
     @Test
     public void testWhere_String() {
-        
-        
-         List<Animals> ListAnimals = new ArrayList<>();         
-         List<Field> fields = new ArrayList<>();   
-         
-         fields.add(new Field<String>( "Name", String.class));
-         fields.add(new Field<String>( "Weight", String.class));
-         fields.add(new Field<String>( "Height", String.class));
-         fields.add(new Field<String>( "Type", String.class));
-        
-         
-        TableFields AnimalsFields = new TableFields(fields);
-         
-        List<String> p = Arrays.asList( new String[]{"Mouse",
-                                                     "Light",
-                                                     "Little",
-                                                     "Type1"});
-         
-        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
-        
-        
-        TableOperation result = CreateTable().SelectFrom(ListAnimals).Where("Field(\"Name\") == \"Mouse\"");
        
-       
+       List<Animals> LA = new ArrayList<>(ListAnimals);
+
+       TableOperation result = CreateTable().SelectFrom(LA).Where("Field(\"Name\") == \"Mouse\"");
+
        Stream<? extends Record> CountStream = result.table.stream();
 
        long count = CountStream.count();
-        
 
        assertEquals(count, 1);
         
@@ -125,30 +107,11 @@ public class TableOperationTest {
     
     @Test
     public void testWhere_Predicate() {
+
+        List<Animals> LA = new ArrayList<>(ListAnimals);
         
-        
-         List<Animals> ListAnimals = new ArrayList<>();         
-         List<Field> fields = new ArrayList<>();   
-         
-         fields.add(new Field<String>( "Name", String.class));
-         fields.add(new Field<String>( "Weight", String.class));
-         fields.add(new Field<String>( "Height", String.class));
-         fields.add(new Field<String>( "Type", String.class));
-        
-         
-        TableFields AnimalsFields = new TableFields(fields);
-         
-        List<String> p = Arrays.asList( new String[]{"Mouse",
-                                                     "Light",
-                                                     "Little",
-                                                     "Type1"});
-         
-        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
-         
-        
-        TableOperation result = CreateTable().SelectFrom(ListAnimals).Where(r -> r.Field("Name").equals("Mouse"));
-        
-        
+        TableOperation result = CreateTable().SelectFrom(LA).Where(r -> r.Field("Name").equals("Mouse"));
+
         Stream<? extends Record> CountStream = result.table.stream();
 
         long count = CountStream.count();
@@ -160,8 +123,9 @@ public class TableOperationTest {
     
     @Test
     public void testWhereCount() {
-      
-         List<Animals> ListAnimals = new ArrayList<>();         
+        
+         List<Animals> LA = new ArrayList<>(ListAnimals);
+        
          List<Field> fields = new ArrayList<>();   
          
          fields.add(new Field<String>( "Name", String.class));
@@ -176,12 +140,10 @@ public class TableOperationTest {
                                                      "Light",
                                                      "Little",
                                                      "Type1"} );
+
+        LA.add( new Animals(AnimalsFields, p.toArray()));
          
-        
-        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
-        ListAnimals.add( new Animals(AnimalsFields, p.toArray()));
-         
-        TableOperation result = CreateTable().SelectFrom(ListAnimals);
+        TableOperation result = CreateTable().SelectFrom(LA);
        
         result.CreateFileRes();
         
@@ -206,8 +168,9 @@ public class TableOperationTest {
     public void testAddTextException() {
 
         TableOperation O =  CreateTable();
-       
+
         O.textExceptionAlreadyAdded = false;
+        
         O.QueryText = "Test Query";
         
         O.addTextException();

@@ -8,9 +8,8 @@ import static Table.TableOperation.*;
 
 public class AccountSystem {
     public static void main( String[] args){
-        
 
-   	
+        
         CreateFileRes();
 
     	List<Animals> LA = CreateCollection.FillList();  // загружаем данные в коллекцию
@@ -19,15 +18,12 @@ public class AccountSystem {
         
         // сопосб подсчета кол-ва записей с помощью предиката   
         // CreateTable().SelectFrom(LA).Where(r -> r.Field("Name").equals("Mouse")).PrintResult();
-         
-        // инициализируем в стаиическом методе класс Ote Table Group
+
         
-        
-        
-        // с помощью либы 
+        // с помощью библиотеки mvel и предиката
         List<String> Rules = CreateCollection.GetRules();   // получам список правил
   
-        //for ( String i : Rules )
+
         for (int i=0; i<Rules.size();++i)
         {
 
@@ -36,13 +32,12 @@ public class AccountSystem {
        AddToFile("Query № "+ (i+1) + " = " + Rules.get(i));
        
        
-       // инициализируем класс TableOperation
+       // Выполнить запрос с выводом полной информации
        CreateTable().SelectFrom(LA).Where(Rules.get(i)).PrintResult();
        
+       // Выполнить запрос с выводом только колличеста записей по правилу 
       // CreateTable().SelectFrom(LA).WhereCount(Rules.get(i)).PrintRezult();
       
-       System.out.println("");
-       
         }   
         
         CloseFile();

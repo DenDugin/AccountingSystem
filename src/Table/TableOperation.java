@@ -15,7 +15,7 @@ import org.mvel2.MVEL;
 
 /**
  * Данный класс реализует выборку 
- * из коллекции по указанному в файле Rules.xml набору правил
+ * из коллекции по указанному в файле Rules.xml набору правилам
  * 
  */
 
@@ -29,13 +29,13 @@ public class TableOperation {
         private static BufferedWriter writer;      
         public long count;                                                      // кол-во записей в результате запроса(правила) 
        
-
-    
+        
+        
 // where с предикатом 
 public TableOperation Where( Predicate<Record> predicate  ){
    	try {
 
-    	this.cursorStream = this.cursorStream.filter(predicate);  		// добавляем в Stream курсора предикат - реализуем where
+    	this.cursorStream = this.cursorStream.filter(predicate);  	// добавляем в Stream предикат - реализуем where
     	
         Stream<? extends Record> CountStream = table.stream();
 
@@ -55,7 +55,7 @@ public TableOperation Where( String Rule ){
         QueryText = Rule; 
 
         Serializable expr = MVEL.compileExpression(Rule); // с помощью библиотеки mvel создаем требуемое правило
-
+        
         this.cursorStream = this.cursorStream.filter(e->MVEL.executeExpression(expr,e,boolean.class));  // реализуем where с помощью предиката
                                   		
    	} catch ( Exception e ) { throw new StreamException( e.getMessage(), e.getStackTrace());}
@@ -71,7 +71,7 @@ public TableOperation WhereCount ( String Rule ) {
 
         Serializable expr = MVEL.compileExpression(Rule);
         
-        count = this.cursorStream.filter(e->MVEL.executeExpression(expr,e,boolean.class)).count();
+        count = this.cursorStream.filter(e->MVEL.executeExpression(expr,e,boolean.class)).count(); // выполняем выражение expr
         
         writer.append("Result count = " + count);
         writer.newLine();
@@ -114,7 +114,6 @@ public static void CloseFile()
      
  }  catch ( Exception e ) 
  {
- e.getMessage();
  System.out.println(e.getMessage());
  JOptionPane.showMessageDialog(null,"Ошибка при закрытии файла " + FileResult + " : " + e.getMessage()); 
  }
